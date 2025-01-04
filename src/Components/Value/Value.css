@@ -4,6 +4,9 @@
 .v-container > div {
   flex: 1;
 }
+.v-wrapper{
+  background-color: white;
+}
 .v-right {
   gap: 0.5rem;
 }
