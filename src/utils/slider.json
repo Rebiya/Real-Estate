@@ -1,0 +1,98 @@
+[
+  {
+    "name": "Addis Garden Estate",
+    "price": "47.0M",
+    "detail": "Bole Road, Bole Subcity, Addis Ababa",
+    "image": "./r1.png"
+  },
+  {
+    "name": "Awash River Residences",
+    "price": "66.4M",
+    "detail": "Awash Road, Adama, Oromia",
+    "image": "./r2.png"
+  },
+  {
+    "name": "Blue Nile Homes",
+    "price": "35.9M",
+    "detail": "Blue Nile Avenue, Bahir Dar, Amhara",
+    "image": "./r3.png"
+  },
+  {
+    "name": "Addis Garden Estate",
+    "price": "47.0M",
+    "detail": "Bole Road, Bole Subcity, Addis Ababa",
+    "image": "./r1.png"
+  },
+  {
+    "name": "Awash River Residences",
+    "price": "66.4M",
+    "detail": "Awash Road, Adama, Oromia",
+    "image": "./r2.png"
+  },
+  {
+    "name": "Blue Nile Homes",
+    "price": "35.9M",
+    "detail": "Blue Nile Avenue, Bahir Dar, Amhara",
+    "image": "./r3.png"
+  },
+  {
+    "name": "Lake Tana Villa",
+    "price": "35.9M",
+    "detail": "Lake Tana Boulevard, Bahir Dar, Amhara",
+    "image": "./10001.jpg"
+  },
+  {
+    "name": "Dire Dawa Heights",
+    "price": "35.9M",
+    "detail": "Kebri Beyah Street, Dire Dawa",
+    "image": "./10002.jpg"
+  },
+  {
+    "name": "Gondar Castle Residences",
+    "price": "35.9M",
+    "detail": "Castle Road, Gondar, Amhara",
+    "image": "./10003.jpg"
+  },
+  {
+    "name": "Axum Heritage Homes",
+    "price": "35.9M",
+    "detail": "Queen of Sheba Street, Axum, Tigray",
+    "image": "./10004.jpg"
+  },
+  {
+    "name": "Hawassa Lakeside",
+    "price": "35.9M",
+    "detail": "Hawassa Street, Hawassa, SNNPR",
+    "image": "./10005.jpg"
+  },
+  {
+    "name": "Mekelle Hills",
+    "price": "35.9M",
+    "detail": "Martyrs Avenue, Mekelle, Tigray",
+    "image": "./10006.jpg"
+  },
+  {
+    "name": "Jimma Forest Retreat",
+    "price": "35.9M",
+    "detail": "Jimma Road, Jimma, Oromia",
+    "image": "./10007.jpg"
+  },
+  {
+    "name": "Harar Old Town Villas",
+    "price": "35.9M",
+    "detail": "Jugol Street, Harar",
+    "image": "./10008.jpg"
+  },
+  {
+    "name": "Dessie Mountain View",
+    "price": "35.9M",
+    "detail": "Mountain View Road, Dessie, Amhara",
+    "image": "./10009.jpeg"
+  },
+  {
+    "name": "Semien Mountains Lodge",
+    "price": "35.9M",
+    "detail": "Semien Mountains Road, Debark, Amhara",
+    "image": "./10010.jpeg"
+  }
+]

@@ -1,15 +1,28 @@
-import React from "react";
-import { Routes, BrowserRouter, Route } from "react-router-dom";
-import Header from "./Components/Header";
-import Home from "./Pages/Home";
+import "./App.css";
+import Companies from "./Components/Companies/Companies";
+import Contact from "./components/Contact/Contact";
+import Footer from "./components/Footer/Footer";
+import GetStarted from "./components/GetStarted/GetStarted";
+import Header from "./components/Header/Header";
+import Hero from "./components/Hero/Hero";
+import Residencies from "./components/Residencies/Residencies";
+import Value from "./components/Value/Value";
+
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-        </Routes>
-      </BrowserRouter>
-    </>
+    <div className="App">
+      <div>
+        <div className="white-gradient" />
+        <Header />
+        <Hero />
+      </div>
+      <Companies />
+      <Residencies />
+      <Value />
+      <Contact />
+      <GetStarted />
+      <Footer />
+    </div>
   );
 }
 
