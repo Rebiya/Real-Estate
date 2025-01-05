@@ -27,8 +27,8 @@
     display: block;
   }
   .h-menu {
-    color: var(--black);
-    position: absolute;
+    color: #4066ff;
+    position: fixed;
     gap: 2rem;
     font-weight: 500;
     flex-direction: column;

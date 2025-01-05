@@ -1,5 +1,6 @@
 import React from "react";
 import "./Footer.css";
+import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <div className="f-wrapper">
@@ -17,10 +18,9 @@ const Footer = () => {
           <span className="primaryText">Information</span>
           <span className="secondaryText"> Addis Ababa, Ethiopia</span>
           <div className="flexCenter f-menu">
-            <span>Property</span>
-            <span>Services</span>
-            <span>Product</span>
-            <span>About Us</span>
+            <Link to="/AboutUs">
+              <button className="styled-button">Staff Login</button>
+            </Link>
           </div>
         </div>
       </div>

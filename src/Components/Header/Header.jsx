@@ -4,9 +4,12 @@ import { BiMenuAltRight } from "react-icons/bi";
 import { getMenuStyles } from "../../utils/common";
 import useHeaderColor from "../../hooks/useHeaderColor";
 import OutsideClickHandler from "react-outside-click-handler";
+import ProfileMenu from "../ProfileMenu/ProfileMenu";
 import { NavLink, Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 const Header = () => {
   const [menuOpened, setMenuOpened] = useState(false);
+  const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
   const headerColor = useHeaderColor();
 
   return (
@@ -27,11 +30,17 @@ const Header = () => {
             className="flexCenter h-menu"
             style={getMenuStyles(menuOpened)}
           >
-            <NavLink to="Properties">Properties</NavLink>
+            <NavLink to="/AboutUs">AboutUs</NavLink>
+            <NavLink to="/Properties">Properties</NavLink>
             <NavLink to="mailto:rebum.19@gmail.com">Contact</NavLink>
-            <NavLink to="/Login">
-              <button className="button">Login</button>
-            </NavLink>
+            {/* login button */}
+            {!isAuthenticated ? (
+              <button className="button" onClick={loginWithRedirect}>
+                Login
+              </button>
+            ) : (
+              <ProfileMenu logout={logout} />
+            )}
           </div>
         </OutsideClickHandler>
 
