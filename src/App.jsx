@@ -7,7 +7,8 @@ import Properties from "./Pages/Properties/Properties";
 import Bookings from "./Pages/Bookings/Bookings";
 import "./App.css";
 import AboutUs from "./Pages/AboutUs/AboutUs";
-import AddProperties from "./Pages/AddProperties/AddProperties"
+import AddProperties from "./Components/AddProperties/AddProperties";
+import AdminDashBoard from "./Pages/AdminDashBoard/AdminDashBoard"
 function App() {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
@@ -21,7 +22,8 @@ function App() {
                 <Route path="properties" element={<Properties />} />
                 <Route path="/bookings" element={<Bookings />} />
                 <Route path="/AboutUs" element={<AboutUs />} />
-                <Route path="/AddProperties" element={<AddProperties/>} />
+                <Route path="/AddProperties" element={<AddProperties />} />
+                <Route path="/AdminDashBoard" element={<AdminDashBoard />} />
               </Route>
             </Routes>
           </BrowserRouter>

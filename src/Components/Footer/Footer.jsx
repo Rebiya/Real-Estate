@@ -18,7 +18,7 @@ const Footer = () => {
           <span className="primaryText">Information</span>
           <span className="secondaryText"> Addis Ababa, Ethiopia</span>
           <div className="flexCenter f-menu">
-            <Link to="/AboutUs">
+            <Link to="/AdminDashBoard">
               <button className="styled-button">Staff Login</button>
             </Link>
           </div>
