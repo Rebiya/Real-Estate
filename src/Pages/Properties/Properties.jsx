@@ -4,11 +4,10 @@ import "./Properties.css";
 import { PuffLoader } from "react-spinners";
 import PropertyCard from "../../components/PropertyCard/PropertyCard";
 import useProperties from "../../hooks/useProperties";
-
+import { getAllProperties } from "../../utils/api";
 const Properties = () => {
   const { isLoading, isError, data } = useProperties();
   const [filter, setFilter] = useState("");
-
   if (isError) {
     return (
       <div className="wrapper">

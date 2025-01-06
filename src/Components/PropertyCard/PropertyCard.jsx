@@ -10,7 +10,7 @@ const PropertyCard = ({ card }) => {
   return (
     <div
       className="flexColStart r-card"
-      onClick={() => navigate(`/property/${card.propertyid}`)}
+      onClick={() => navigate(`/properties/${propertyid}`)}
     >
       <img src={card.imgurl} alt="home" />
 

@@ -4,7 +4,7 @@ export const api = axios.create({
   baseURL: "https://localhost:8000/api"
 });
 
-//to get all properties for the home page
+//to get all properties for the home page and to get all elements with status pending so used in admin dashboard and properties and slider page
 export const getAllProperties = async () => {
   try {
     const response = await api.get("/Property", {

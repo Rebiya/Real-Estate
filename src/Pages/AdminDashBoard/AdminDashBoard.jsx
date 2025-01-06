@@ -1,11 +1,28 @@
-import React from "react";
-import { FaSearch, FaUpload } from "react-icons/fa";
-import "./AdminDashBoard.css"; // For custom styling
+import React, { useState } from "react";
+import { FaSearch, FaUpload, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import "./AdminDashBoard.css";
 
 const AdminDashBoard = () => {
   const navigate = useNavigate();
 
+  // State for managing property cards
+  const [properties, setProperties] = useState(
+    [...Array(8)].map((_, index) => ({
+      id: index,
+      title: `Property ${index + 1}`,
+      price: "$500,000",
+      image: "https://via.placeholder.com/300x200"
+    }))
+  );
+
+  // Delete handler
+  const handleDelete = (id) => {
+    setProperties(properties.filter((property) => property.id !== id));
+  };
+  const openCalendly = () => {
+    window.open("https://calendly.com/rebum-19", "_blank");
+  };
   return (
     <div className="dashboard-container">
       {/* Sidebar */}
@@ -26,6 +43,9 @@ const AdminDashBoard = () => {
         >
           <FaUpload /> Upload Properties
         </button>
+        <button className="upload-button" style={{marginTop:"10px"}} onClick={openCalendly}>
+          Open Calendly
+        </button>
       </aside>
 
       {/* Main Content */}
@@ -42,38 +62,27 @@ const AdminDashBoard = () => {
 
         {/* Content Section */}
         <div className="dashboard-content">
-          {/* Left Section */}
-          <div className="left-content">
-            <h2>Welcome to Admin Dashboard</h2>
-
-            <div className="property-cards">
-              {/* Placeholder Cards */}
-              {[...Array(4)].map((_, index) => (
-                <div className="property-card" key={index}>
-                  <img
-                    src="https://via.placeholder.com/300x200"
-                    alt="Property"
-                    className="property-image"
-                  />
-                  <div className="property-details">
-                    <h3>Property {index + 1}</h3>
-                    <p>Price: $500,000</p>
-                  </div>
+          <h2>Welcome to Admin Dashboard</h2>
+          <div className="property-cards">
+            {properties.map((property) => (
+              <div className="property-card" key={property.id}>
+                <img
+                  src={property.image}
+                  alt={property.title}
+                  className="property-image"
+                />
+                <div className="property-details">
+                  <h3>{property.title}</h3>
+                  <p>Price: {property.price}</p>
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDelete(property.id)}
+                  >
+                    <FaTrash /> Delete
+                  </button>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right Section */}
-          <div className="right-content">
-            <div className="calendar-container">
-              <iframe
-                src="https://calendly.com/your-calendly-link"
-                title="Calendly"
-                width="100%"
-                height="500px"
-              ></iframe>
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

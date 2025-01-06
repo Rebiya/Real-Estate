@@ -1,0 +1,9 @@
+.map {
+  height: 60%;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 1rem auto; /* Center the map */
+  position: relative;
+  z-index: 1;
+}

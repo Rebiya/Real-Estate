@@ -1,9 +1,15 @@
 [
   {
-    "name": "Addis Garden Estate",
+    "title": "Addis Garden Estate",
     "price": "47.0M",
-    "detail": "Bole Road, Bole Subcity, Addis Ababa",
-    "image": "./r1.png"
+    "location": "Ethiopia, Bole Subcity, Addis Ababa",
+    "descripton": "Assosa Greenfield Estates, situated on Bambasi Road in Assosa, Benishangu",
+    "bedrooms": "3",
+    "bathroom": "2",
+    "propertyType": "living real Estate",
+    "property id": "4",
+    "status": "Available",
+    "image":"./10003.jpg"
   },
   {
     "name": "Awash River Residences",
