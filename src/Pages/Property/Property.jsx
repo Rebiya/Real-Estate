@@ -1,27 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import data from "../../utils/slider.json";
 import "./Property.css";
 import { FaShower } from "react-icons/fa";
 import { MdLocationPin, MdMeetingRoom } from "react-icons/md";
 import Map from "../../Components/Map/Map";
 import img from "../../assets/r1.png";
+import { PopupWidget } from "react-calendly";
 
 const Property = () => {
   const singleData = data[0];
-  const calendlyLink = "https://calendly.com/rebum-19/30min?month=2025-01";
-
-  const handleBookVisit = () => {
-    // Initialize the Calendly popup widget
-    window.Calendly.initPopupWidget({ url: calendlyLink });
-    return false; // Prevent default button behavior
-  };
 
   return (
     <div className="wrapper property-wrapper">
       <div className="flexColStart paddings innerWidth property-container">
         {/* Image */}
         <img src={img} alt="home image" />
-        <div className="flexCenter property-details">
+        <div className="flexCenter property-detail">
           {/* Left Section */}
           <div className="flexColStart left" style={{ width: "50%" }}>
             <div className="flexStart head">
@@ -62,9 +56,13 @@ const Property = () => {
             </div>
 
             {/* Bookings */}
-            <button className="button" onClick={handleBookVisit}>
-              Book your visit
-            </button>
+            <PopupWidget
+              url="https://calendly.com/rebum-19/30min"
+              rootElement={document.getElementById("root")}
+              text="Book Your Visit!"
+              textColor="#ffffff"
+              color="#00a2ff"
+            />
           </div>
 
           {/* Right Side */}

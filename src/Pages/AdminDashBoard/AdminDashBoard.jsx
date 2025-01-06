@@ -21,9 +21,10 @@ const AdminDashBoard = () => {
     setProperties(properties.filter((property) => property.id !== id));
   };
   const openCalendly = () => {
-    window.open("https://calendly.com/rebum-19", "_blank");
+    window.open("https://calendly.com/event_types/user/me", "_blank");
   };
-  return (
+  // https://calendly.com/rebum-19
+  https: return (
     <div className="dashboard-container">
       {/* Sidebar */}
       <aside className="dashboard-sidebar">
@@ -43,7 +44,11 @@ const AdminDashBoard = () => {
         >
           <FaUpload /> Upload Properties
         </button>
-        <button className="upload-button" style={{marginTop:"10px"}} onClick={openCalendly}>
+        <button
+          className="upload-button"
+          style={{ marginTop: "10px" }}
+          onClick={openCalendly}
+        >
           Open Calendly
         </button>
       </aside>
