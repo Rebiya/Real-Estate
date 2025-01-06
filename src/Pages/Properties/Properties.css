@@ -1,20 +1,93 @@
-.properties-container{
-    gap: 2rem;
-    background-color: white;
-}
-.properties-container .search-bar{
-    width: clamp(12rem, 100%, 28rem);
-    border-radius: 30px;
-    border: 1px solid rgba(120, 120, 120, 0.374);
-    flex-wrap: nowrap;
+/* Container for the property cards */
+.properties-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 cards on large screens */
+  gap: 2rem; /* Spacing between the cards */
+  padding: 2rem; /* Padding around the container */
+  background-color: white;
 }
 
-.properties-container .search-bar .button{
-    border-radius: 30px;
-    font-size: 12px;
-    padding: 10px 15px;
+/* Adjust for medium screens (2 cards per row) */
+@media screen and (max-width: 1024px) {
+  .properties-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row */
+  }
 }
 
-.properties-container .search-bar input{
-    width: 70%;
+/* Adjust for small screens (1 card per row) */
+@media screen and (max-width: 768px) {
+  .properties-container {
+    grid-template-columns: 1fr; /* 1 card per row */
+    justify-items: center; /* Center-align the card */
+  }
+}
+
+/* Styling for the search bar */
+.properties-container .search-bar {
+  width: clamp(12rem, 100%, 28rem); /* Responsive width */
+  border-radius: 30px;
+  border: 1px solid rgba(120, 120, 120, 0.374);
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+/* Search bar button styling */
+.properties-container .search-bar .button {
+  border-radius: 30px;
+  font-size: 12px;
+  padding: 10px 15px;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+/* Search bar input field styling */
+.properties-container .search-bar input {
+  width: 70%;
+  border: none;
+  outline: none;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+/* Individual card styling */
+.r-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 300ms ease-in-out;
+  cursor: pointer;
+}
+
+.r-card:hover {
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.r-card > img {
+  width: 100%;
+  height: 10rem;
+  border-radius: 10px;
+  object-fit: cover; /* Ensures the image scales properly */
+}
+
+.r-card .secondaryText {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.r-card .primaryText {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Responsive card dimensions */
+@media screen and (max-width: 768px) {
+  .r-card {
+    width: 90%; /* Make cards more compact on small screens */
+    margin: 0 auto; /* Center the card */
+  }
 }

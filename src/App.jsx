@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Property from "./Components/Property/Property";
 import AboutUs from "./Pages/AboutUs/AboutUs";
+import { ReactQueryDevtools } from "react-query/devtools";
 import AddProperties from "./Components/AddProperties/AddProperties";
 import AdminDashBoard from "./Pages/AdminDashBoard/AdminDashBoard";
 function App() {
@@ -25,7 +26,8 @@ function App() {
                 {/* Use Layout as the parent route */}
                 <Route path="/" element={<Layout />}>
                   <Route index element={<Websites />} />
-                  <Route path="properties" element={<Properties />} />
+                  <Route path="/properties" element={<Properties />} />
+                  <Route path="/property/:propertyid" element={<Property />} />
                   <Route path="/bookings" element={<Bookings />} />
                   <Route path="/AboutUs" element={<AboutUs />} />
                   <Route path="/AddProperties" element={<AddProperties />} />
@@ -34,6 +36,8 @@ function App() {
               </Routes>
             </Suspense>
           </BrowserRouter>
+          <ToastContainer />
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </MantineProvider>
     </div>

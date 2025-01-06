@@ -3,13 +3,21 @@ import SearchBar from "../../Components/SearchBar/SearchBar";
 import "./Properties.css";
 import { PuffLoader } from "react-spinners";
 import PropertyCard from "../../components/PropertyCard/PropertyCard";
-import data from "../../utils/slider.json";
-// import useProperties from "../../hooks/useProperties";
+import useProperties from "../../hooks/useProperties";
 
 const Properties = () => {
-  // const { isLoading } = useProperties;
+  const { isLoading, isError, data } = useProperties();
   const [filter, setFilter] = useState("");
-  if (!data) {
+
+  if (isError) {
+    return (
+      <div className="wrapper">
+        <span>Error while fetching data</span>
+      </div>
+    );
+  }
+
+  if (isLoading) {
     return (
       <div className="wrapper flexCenter" style={{ height: "60vh" }}>
         <PuffLoader
@@ -22,24 +30,28 @@ const Properties = () => {
       </div>
     );
   }
+
+  // Ensure data is always an array
+  const propertyList = Array.isArray(data) ? data : [];
+
   return (
     <div className="wrapper">
-      <div className="flexColCenter paddings innerWidth properties-container">
+      <div className="flexColCenter paddings innerWidth">
         <SearchBar filter={filter} setFilter={setFilter} />
 
-        <div className="paddings flexCenter properties">
-          {data
+        <div className="properties-container">
+          {propertyList
             .filter((property) => {
-              // Ensure the necessary fields exist before accessing them
-              const name = property?.name || ""; // Default to empty string if undefined
-              const detail = property?.detail || "";
-              const price = property?.price || "";
+              const title = property?.title || "";
+              const Location = property?.Location || "";
+              const price = property?.price?.toString() || "";
+              const status = property?.status || "";
 
-              // Filter logic
               return (
-                name.toLowerCase().includes(filter.toLowerCase()) ||
-                detail.toLowerCase().includes(filter.toLowerCase()) ||
-                price.toLowerCase().includes(filter.toLowerCase())
+                title.toLowerCase().includes(filter.toLowerCase()) ||
+                Location.toLowerCase().includes(filter.toLowerCase()) ||
+                price.includes(filter) ||
+                status.toLowerCase().includes(filter.toLowerCase())
               );
             })
             .map((card, i) => (

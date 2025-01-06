@@ -1,20 +1,25 @@
 import React from "react";
 import "./PropertyCard.css";
-import { useNavigate } from "react-router-dom";
+import { truncate } from "lodash";
+import { useNavigate, useParams } from "react-router-dom";
 const PropertyCard = ({ card }) => {
-    const navigate = useNavigate();
-  return (
-    <div>
-      <div className="flexColStart r-card">
-        <img src={card.image} alt="home" />
+  console.log(card);
+  const navigate = useNavigate();
+  const { propertyid } = useParams();
 
-        <span className="secondaryText r-price">
-          <span>{card.price}</span>
-          <span style={{ color: "orange", marginLeft: "5px" }}>ETB</span>
-        </span>
-        <span className="primaryText">{card.name}</span>
-        <span className="secondaryText">{card.detail}</span>
-      </div>
+  return (
+    <div
+      className="flexColStart r-card"
+      onClick={() => navigate(`/property/${card.propertyid}`)}
+    >
+      <img src={card.imgurl} alt="home" />
+
+      <span className="secondaryText r-price">
+        <span>{card.price}</span>
+        <span style={{ color: "orange", marginLeft: "5px" }}>ETB</span>
+      </span>
+      <span className="primaryText">{card.title}</span>
+      <span className="secondaryText">{card.status}</span>
     </div>
   );
 };

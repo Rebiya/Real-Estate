@@ -8,14 +8,14 @@
 }
 
 .white-gradient {
-  position: relative;
+  position: sticky;
   background: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.4) 0%,  /* Light center */
-    rgba(0, 0, 0, 0.6) 50%,       /* Smooth transition */
+    rgba(67, 66, 66, 0.336) 0%,  /* Light center */
+    rgba(0, 0, 0, 0.916) 50%,       /* Smooth transition */
     rgba(0, 0, 0, 0.9) 100%       /* Dark edge */
   );
-  background-position: 0% 0%; /* Adjust the circle's position */
+  background-position: 80% 20%; /* Adjust the circle's position */
   width: 100%;                  /* Make it responsive if needed */
   height: 100%;                 /* Adjust as needed */
 }
