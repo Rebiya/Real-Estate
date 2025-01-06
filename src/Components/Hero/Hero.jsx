@@ -28,30 +28,25 @@ const Hero = () => {
             <span>Forget all difficulties in finding a residence for you</span>
           </div>
 
-          <div className="flexCenter search-bar">
-            <HiLocationMarker color="var(--blue)" size={25} />
-            <input type="text" />
-            <button className="button">Search</button>
-          </div>
 
           <div className="flexCenter stats">
             <div className="flexColCenter stat">
               <span>
-                <CountUp start={870} end={900} duration={4} /> <span>+</span>
+                <CountUp start={670} end={900} duration={4} /> <span>+</span>
               </span>
               <span className="secondaryText">Premium Product</span>
             </div>
 
             <div className="flexColCenter stat">
               <span>
-                <CountUp start={830} end={860} duration={4} /> <span>+</span>
+                <CountUp start={730} end={860} duration={4} /> <span>+</span>
               </span>
               <span className="secondaryText">Happy Customer</span>
             </div>
 
             <div className="flexColCenter stat">
               <span>
-                <CountUp end={30} /> <span>+</span>
+                <CountUp start={0} end={30} /> <span>+</span>
               </span>
               <span className="secondaryText">Awards Winning</span>
             </div>
