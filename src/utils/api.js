@@ -99,26 +99,7 @@ export const removeBooking = async (id, username, token) => {
 };
 
 //used in home page of the admin dashboard
-export const getAllBookings = async (username, token) => {
-  if (!token) return;
-  try {
-    const res = await api.post(
-      `/user/allBookings`,
-      {
-        username
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
-    return res.data["bookedVisits"];
-  } catch (error) {
-    toast.error("Something went wrong while fetching bookings");
-    throw error;
-  }
-};
+
 
 //when admin wants to upload new property
 export const createResidency = async (data, token) => {

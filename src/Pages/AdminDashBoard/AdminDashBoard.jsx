@@ -2,10 +2,22 @@ import React, { useState } from "react";
 import { FaSearch, FaUpload, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import "./AdminDashBoard.css";
-
+import { GiReturnArrow } from "react-icons/gi";
+import useAuthCheck from "../../hooks/useAuthCheck";
+import AddPropertyModal from "../../Components/AddPropertyModal/AddPropertyModal.jsx";
 const AdminDashBoard = () => {
   const navigate = useNavigate();
+  const [modalOpened, setModalOpened] = useState(false);
+  const { validateLogin } = useAuthCheck();
 
+  const handleAddPropertyClick = () => {
+    if (!validateLogin()) {
+      toast.error("You need to log in to upload properties!");
+      return;
+    }
+    setModalOpened(true);
+    console.log(modalOpened)
+  };
   // State for managing property cards
   const [properties, setProperties] = useState(
     [...Array(8)].map((_, index) => ({
@@ -19,6 +31,9 @@ const AdminDashBoard = () => {
   // Delete handler
   const handleDelete = (id) => {
     setProperties(properties.filter((property) => property.id !== id));
+  };
+  const handleReturn = () => {
+    navigate("/");
   };
   const openCalendly = () => {
     window.open("https://calendly.com/event_types/user/me", "_blank");
@@ -38,15 +53,13 @@ const AdminDashBoard = () => {
           <li>Customers</li>
           <li>Settings</li>
         </ul>
-        <button
-          className="upload-button"
-          onClick={() => navigate("/AddProperties")}
-        >
+        <button className="upload-button" onClick={handleAddPropertyClick}>
           <FaUpload /> Upload Properties
         </button>
+        <AddPropertyModal opened={modalOpened} setOpened={setModalOpened} />
         <button
           className="upload-button"
-          style={{ marginTop: "10px" }}
+          style={{ marginTop: "5px" }}
           onClick={openCalendly}
         >
           Open Calendly
@@ -79,12 +92,20 @@ const AdminDashBoard = () => {
                 <div className="property-details">
                   <h3>{property.title}</h3>
                   <p>Price: {property.price}</p>
-                  <button
-                    className="delete-button"
-                    onClick={() => handleDelete(property.id)}
-                  >
-                    <FaTrash /> Delete
-                  </button>
+                  <div className="buttons">
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDelete(property.id)}
+                    >
+                      <FaTrash /> Delete
+                    </button>
+                    <button
+                      className="return-button"
+                      onClick={() => handleReturn(property.id)}
+                    >
+                      <GiReturnArrow /> Return
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

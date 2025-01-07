@@ -12,13 +12,20 @@ import "react-toastify/dist/ReactToastify.css";
 import Property from "./Pages/Property/Property";
 import AboutUs from "./Pages/AboutUs/AboutUs";
 import { ReactQueryDevtools } from "react-query/devtools";
-import AddProperties from "./Components/AddProperties/AddProperties";
+import AddPropertyModal from "./Components/AddPropertyModal/AddPropertyModal";
 import AdminDashBoard from "./Pages/AdminDashBoard/AdminDashBoard";
 function App() {
   const queryClient = new QueryClient();
   return (
     <div className="App">
-      <MantineProvider withGlobalStyles withNormalizeCSS>
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{
+          colorScheme: "light",
+          primaryColor: "blue"
+        }}
+      >
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>
             <Suspense fallback={<div>Loading...</div>}>
@@ -33,7 +40,10 @@ function App() {
                   />
                   <Route path="/bookings" element={<Bookings />} />
                   <Route path="/AboutUs" element={<AboutUs />} />
-                  <Route path="/AddProperties" element={<AddProperties />} />
+                  <Route
+                    path="/AddPropertyModal"
+                    element={<AddPropertyModal />}
+                  />
                   <Route path="/AdminDashBoard" element={<AdminDashBoard />} />
                 </Route>
               </Routes>
