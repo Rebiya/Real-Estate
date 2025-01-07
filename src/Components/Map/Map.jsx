@@ -1,8 +1,8 @@
 import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import GeoCoderMarker from "../GeoCoderMarker/GeoCoderMarker";
-import "./Map.css"
-const Map = ({ address }) => {
+import "./Map.css";
+const Map = ({ city, subcity, country }) => {
   return (
     <div className="map">
       <MapContainer
@@ -11,14 +11,14 @@ const Map = ({ address }) => {
         scrollWheelZoom={true}
         style={{
           height: "60vh",
-          width:"160%",
+          width: "160%",
           maxWidth: "800px",
           position: "relative",
           zIndex: 0
         }}
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        <GeoCoderMarker location={address} />
+        <GeoCoderMarker city={city} subcity={subcity} country={country} />
       </MapContainer>
     </div>
   );

@@ -67,7 +67,7 @@ const Property = () => {
 
           {/* Right Side */}
           <div style={{ width: "50%" }}>
-            <Map address={singleData?.location} />
+            <Map city={singleData?.city} subcity ={singleData.subcity} country={singleData.country} />
           </div>
         </div>
       </div>
