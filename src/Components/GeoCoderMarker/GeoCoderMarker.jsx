@@ -19,7 +19,7 @@ const GeoCoderMarker = ({ address }) => {
   useEffect(() => {
     ELG.geocode()
       .text(address)
-      .run((err, results) => {
+      .run((err, results,response) => {
         if (results?.results?.length > 0) {
           const { lat, lng } = results.results[0].latlng;
           setPosition([lat, lng]);
