@@ -100,7 +100,6 @@ export const removeBooking = async (id, username, token) => {
 
 //used in home page of the admin dashboard
 
-
 //when admin wants to upload new property
 export const createResidency = async (data, token) => {
   console.log(data);
@@ -111,7 +110,8 @@ export const createResidency = async (data, token) => {
       }
     });
   } catch (error) {
-    toast.error("Something went wrong while uploading property");
+    console.error("Error posting to database:", error);
+    toast.error("Something went wrong while posting to database");
     throw error;
   }
 };

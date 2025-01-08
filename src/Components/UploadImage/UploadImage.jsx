@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import "./UploadImage.css";
+import { toast } from "react-toastify";
 import "@mantine/core/styles.css";
 import { Button, Group } from "@mantine/core";
 const UploadImage = ({
@@ -27,9 +28,9 @@ const UploadImage = ({
       (err, result) => {
         if (result.event === "success") {
           setImageURL(result.info.secure_url);
-          //https://res.cloudinary.com/your-cloud-name/image/upload/v1234567890/your-upload-preset/unique-image-name.jpg   so it would be stored in the db in this format
-        } else {
-          toast.error("error while uploading image", err);
+          //https://res.cloudinary.com/your-cloud-name/image/upload/v1234567890/your-upload-preset/unique-image-name.jpg
+          //e.g https://res.cloudinary.com/djxrxjiuf/image/upload/v1736327134/ttn3r7hmy2rekgjluvhl.jpg
+          //   so it would be stored in the db in this format
         }
       }
     );

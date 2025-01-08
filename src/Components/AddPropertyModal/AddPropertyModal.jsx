@@ -5,6 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import "@mantine/core/styles.css";
 import UploadImage from "../UploadImage/UploadImage";
 import BasicDetail from "../BasicDetail/BasicDetail";
+import Facilities from "../Facilities/Facilities";
 
 const AddPropertyModal = () => {
   const [active, setActive] = useState(0);
@@ -52,7 +53,6 @@ const AddPropertyModal = () => {
       >
         <Stepper.Step
           label="Location"
-          description="Add Specific Country ,City ,SubCity"
         >
           <AddLocation
             nextStep={nextStep}
@@ -62,7 +62,6 @@ const AddPropertyModal = () => {
         </Stepper.Step>
         <Stepper.Step
           label="Upload Image"
-          description="Browse and Upload Image"
         >
           <UploadImage
             nextStep={nextStep}
@@ -73,9 +72,18 @@ const AddPropertyModal = () => {
         </Stepper.Step>
         <Stepper.Step
           label="Add Basic Detail"
-          description="title,description,price,status"
         >
           <BasicDetail
+            nextStep={nextStep}
+            prevStep={prevStep}
+            propertyDetails={propertyDetails}
+            setPropertyDetails={setPropertyDetails}
+          />
+        </Stepper.Step>
+        <Stepper.Step
+          label="facilities and status"
+        >
+          <Facilities
             nextStep={nextStep}
             prevStep={prevStep}
             propertyDetails={propertyDetails}
