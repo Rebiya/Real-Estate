@@ -7,7 +7,6 @@ import useAuthCheck from "../../hooks/useAuthCheck";
 import AddPropertyModal from "../../Components/AddPropertyModal/AddPropertyModal.jsx";
 const AdminDashBoard = () => {
   const navigate = useNavigate();
-  const [modalOpened, setModalOpened] = useState(false);
   const { validateLogin } = useAuthCheck();
 
   const handleAddPropertyClick = () => {
@@ -15,8 +14,7 @@ const AdminDashBoard = () => {
       toast.error("You need to log in to upload properties!");
       return;
     }
-    setModalOpened(true);
-    console.log(modalOpened)
+    navigate("/AddPropertyModal");
   };
   // State for managing property cards
   const [properties, setProperties] = useState(
@@ -56,7 +54,6 @@ const AdminDashBoard = () => {
         <button className="upload-button" onClick={handleAddPropertyClick}>
           <FaUpload /> Upload Properties
         </button>
-        <AddPropertyModal opened={modalOpened} setOpened={setModalOpened} />
         <button
           className="upload-button"
           style={{ marginTop: "5px" }}

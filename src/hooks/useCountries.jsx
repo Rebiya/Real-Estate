@@ -1,15 +1,23 @@
 import countries from "world-countries";
 
-const formattedCountries = countries.map((country)=> ({
-    value: country.name.common,
-    label: `${country.name.common} ${country.flag}`,
-    latlng: country.latlng,
-    region: country.region
-}))
+// Function to convert ISO alpha-2 code to flag emoji
+const getFlagEmoji = (countryCode) => {
+  if (!countryCode) return "";
+  return countryCode
+    .toUpperCase()
+    .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt()));
+};
 
-const useCountries = ()=> {
-    const getAll = ()=> formattedCountries;
-    return {getAll}
-}
+const formattedCountries = countries.map((country) => ({
+  value: country.name.common,
+  label: `${country.name.common} ${getFlagEmoji(country.cca2)}`,
+  latlng: country.latlng,
+  region: country.region,
+}));
 
-export default useCountries
+const useCountries = () => {
+  const getAll = () => formattedCountries;
+  return { getAll };
+};
+
+export default useCountries;

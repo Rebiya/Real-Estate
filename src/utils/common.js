@@ -9,7 +9,7 @@ export const sliderSettings = {
   spaceBetween: 50,
   breakpoints: {
     480: {
-      slidesPerView: 1,
+      slidesPerView: 1
     },
     600: {
       slidesPerView: 2
@@ -18,8 +18,14 @@ export const sliderSettings = {
       slidesPerView: 3
     },
     1100: {
-      slidesPerView: 4,
-    },
-  },
-
+      slidesPerView: 4
+    }
+  }
 };
+
+export const validateString = (value) => {
+  return value?.length < 3 || value === null
+    ? "must have atleast 3 characters"
+    : null;
+};
+

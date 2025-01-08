@@ -1,50 +1,72 @@
-import React, { useState } from "react";
-import { Stepper, Button, Group, Container, Modal } from "@mantine/core";
+import { useState } from "react";
+import { Stepper, Button, Group } from "@mantine/core";
+import AddLocation from "../AddLocation/AddLocation";
+import { useAuth0 } from "@auth0/auth0-react";
+import "@mantine/core/styles.css";
 
-const AddPropertyModal = ({ opened, setOpened }) => {
-  const [active, setActive] = useState(0); // Stepper is 0-indexed
+const AddPropertyModal = () => {
+  const [active, setActive] = useState(0);
+  const { user } = useAuth0();
+
+  const [propertyDetails, setPropertyDetails] = useState({
+    propertyid: "",
+    title: "",
+    description: "",
+    price: 0,
+    country: "",
+    city: "",
+    subcity: "",
+    imgurl: null,
+    status: "",
+    propertyType: "",
+    bedrooms: 0,
+    bathroom: 0,
+    staffemail: user?.email
+  });
+
   const nextStep = () =>
     setActive((current) => (current < 3 ? current + 1 : current));
   const prevStep = () =>
     setActive((current) => (current > 0 ? current - 1 : current));
 
   return (
-    <Modal
-      opened={opened}
-      onClose={() => setOpened(false)}
-      closeOnClickOutside
-      size="90rem" // Adjust size for better responsiveness
-      style={{ backgroundColor: "white" }}
+    <div
+      style={{
+        padding: "30px",
+        borderRadius: "10px",
+        color: "black",
+        maxWidth: "80%",
+        margin: "0 auto"
+      }}
     >
-      <Container h={"40rem"} w={"100%"}>
-        <Stepper
-          active={active}
-          onStepClick={setActive}
-          breakpoint="sm"
-          allowNextStepsSelect={false}
-        >
-          <Stepper.Step label="First step" description="Create an account">
-            Step 1 content: Create an account
-          </Stepper.Step>
-          <Stepper.Step label="Second step" description="Verify email">
-            Step 2 content: Verify email
-          </Stepper.Step>
-          <Stepper.Step label="Final step" description="Get full access">
-            Step 3 content: Get full access
-          </Stepper.Step>
-          <Stepper.Completed>
-            Completed, click back button to get to the previous step
-          </Stepper.Completed>
-        </Stepper>
-
-        <Group position="center" mt="xl">
-          <Button variant="default" onClick={prevStep}>
-            Back
-          </Button>
-          <Button onClick={nextStep}>Next step</Button>
-        </Group>
-      </Container>
-    </Modal>
+      <Stepper
+        active={active}
+        onStepClick={setActive}
+        breakpoint="sm"
+        allowNextStepsSelect={false}
+        size="lg"
+        color="blue"
+        radius="md"
+       
+      >
+        <Stepper.Step label="Location" description="Add Specific Country ,City ,SubCity">
+          <AddLocation
+            nextStep={nextStep}
+            propertyDetails={propertyDetails}
+            setPropertyDetails={setPropertyDetails}
+          />
+        </Stepper.Step>
+        <Stepper.Step label="Second step" description="Verify email">
+          <p>Step 2 content: Verify email</p>
+        </Stepper.Step>
+        <Stepper.Step label="Final step" description="Get full access">
+          <p>Step 3 content: Get full access</p>
+        </Stepper.Step>
+        <Stepper.Completed>
+          <p>Completed! Click back to review your steps.</p>
+        </Stepper.Completed>
+      </Stepper>
+    </div>
   );
 };
 
