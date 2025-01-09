@@ -9,7 +9,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const Header = () => {
   const [menuOpened, setMenuOpened] = useState(false);
-  const { loginWithRedirect, isAuthenticated,logout } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
   const headerColor = useHeaderColor();
 
   return (

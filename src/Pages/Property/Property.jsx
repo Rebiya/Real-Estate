@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import data from "../../utils/slider.json";
 import "./Property.css";
 import { FaShower } from "react-icons/fa";
@@ -6,9 +6,27 @@ import { MdLocationPin, MdMeetingRoom } from "react-icons/md";
 import Map from "../../Components/Map/Map";
 import img from "../../assets/r1.png";
 import { PopupWidget } from "react-calendly";
+import useAuthCheck from "../../hooks/useAuthCheck";
 
 const Property = () => {
   const singleData = data[0];
+  const { validateLogin } = useAuthCheck(); // Use the auth check hook
+
+  const handlePopupRender = () => {
+    // Only render the PopupWidget if the user is authenticated
+    if (validateLogin()) {
+      return (
+        <PopupWidget
+          url="https://calendly.com/rebum-19/30min"
+          rootElement={document.getElementById("root")}
+          text="Book Your Visit!"
+          textColor="#ffffff"
+          color="#00a2ff"
+        />
+      );
+    }
+    return null;
+  };
 
   return (
     <div className="wrapper property-wrapper">
@@ -55,19 +73,17 @@ const Property = () => {
               </span>
             </div>
 
-            {/* Bookings */}
-            <PopupWidget
-              url="https://calendly.com/rebum-19/30min"
-              rootElement={document.getElementById("root")}
-              text="Book Your Visit!"
-              textColor="#ffffff"
-              color="#00a2ff"
-            />
+            {/* Bookings - Conditional Rendering */}
+            {handlePopupRender()}
           </div>
 
           {/* Right Side */}
           <div style={{ width: "50%" }}>
-            <Map city={singleData?.city} subcity ={singleData.subcity} country={singleData.country} />
+            <Map
+              city={singleData?.city}
+              subcity={singleData.subcity}
+              country={singleData.country}
+            />
           </div>
         </div>
       </div>

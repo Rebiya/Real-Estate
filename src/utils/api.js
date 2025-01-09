@@ -8,7 +8,7 @@ export const api = axios.create({
 export const getAllProperties = async () => {
   try {
     const response = await api.get("/Property", {
-      timeout: 30 * 1000
+      timeout: 10 * 1000
     });
 
     if (response.status === 400 || response.status === 500) {
@@ -79,14 +79,11 @@ export const bookStatus = async (status, id, token) => {
 };
 
 //used when admin needs to delete booked properties and users want to cancel the booked property
-export const removeBooking = async (id, username, token) => {
+export const removeBooking = async (id, token) => {
   try {
     await api.delete(`/Property/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
-      },
-      data: {
-        username
       }
     });
   } catch (error) {
@@ -97,7 +94,23 @@ export const removeBooking = async (id, username, token) => {
     throw error;
   }
 };
-
+//if the updated db worked
+export const fetchPendingProperties = async (data, token) => {
+  try {
+    const response = await api.get("/Property/pending", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      params: data
+    });
+    return response.data;
+  } catch (error) {
+    toast.error(
+      "Something went wrong while fetching properties based on status, Please try again"
+    );
+    throw error;
+  }
+};
 //used in home page of the admin dashboard
 
 //when admin wants to upload new property
