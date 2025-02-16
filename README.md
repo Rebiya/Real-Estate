@@ -86,8 +86,8 @@ npm run dev
 ## 📩 Contact
 For any inquiries, feel free to reach out:
 - 📧 Email: rebum.19@gmail.com
-- 🌐 Website: [NovaNest]([https://yourwebsite.com](https://full-stack-real-estate-youtube-sooty.vercel.app/))
-- 🐦 Linkedin: [rebiya-musema](https://linkedin.com/in/rebiya-musema-4678582a4)
+- 🌐 Website: [NovaNest](https://full-stack-real-estate-youtube-sooty.vercel.app/)
+- 🐦 Linkedin: [rebiya-musema](https://www.linkedin.com/in/rebiya/)
 
 ---
 
