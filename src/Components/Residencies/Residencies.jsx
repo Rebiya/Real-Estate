@@ -1,5 +1,4 @@
 import React from "react";
-import data from "../../utils/slider.json";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import "swiper/css";
 import "./Residencies.css";
@@ -7,6 +6,7 @@ import { sliderSettings } from "../../utils/common";
 import PropertyCard from "../PropertyCard/PropertyCard";
 import useProperties from "../../hooks/useProperties";
 import { PuffLoader } from "react-spinners";
+
 const Residencies = () => {
   const { data, isLoading, isError } = useProperties();
 
@@ -17,6 +17,7 @@ const Residencies = () => {
       </div>
     );
   }
+  
   if (isLoading) {
     return (
       <div className="wrapper flexCenter" style={{ height: "60vh" }}>
@@ -30,19 +31,19 @@ const Residencies = () => {
       </div>
     );
   }
+
   return (
     <div id="residencies" className="r-wrapper">
       <div className="paddings innerWidth r-container">
         <div className="flexColStart r-head">
           <span className="orangeText">Best Choices</span>
-          <span className="primaryText">Popular Residencies</span>
+          <span className="primaryText">Popular Properties</span>
         </div>
         <Swiper {...sliderSettings}>
           <SlideNextButton />
-          {/* slider */}
-          {data.slice(0, 15).map((card, i) => (
+          {data.slice(0, 15).map((property, i) => (
             <SwiperSlide key={i}>
-              <PropertyCard card={card} />
+              <PropertyCard card={property} />
             </SwiperSlide>
           ))}
         </Swiper>

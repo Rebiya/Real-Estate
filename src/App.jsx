@@ -44,8 +44,9 @@ function App() {
                     path="/AddPropertyModal"
                     element={<AddPropertyModal />}
                   />
-                  <Route path="/AdminDashBoard" element={<AdminDashBoard />} />
+                 
                 </Route>
+                 <Route path="/AdminDashBoard" element={<AdminDashBoard />} />
               </Routes>
             </Suspense>
           </BrowserRouter>

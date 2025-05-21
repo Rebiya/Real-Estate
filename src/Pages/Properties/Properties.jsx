@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import "./Properties.css";
 import { PuffLoader } from "react-spinners";
-import PropertyCard from "../../components/PropertyCard/PropertyCard";
+import PropertyCard from "../../Components/PropertyCard/PropertyCard";
 import useProperties from "../../hooks/useProperties";
-import { getAllProperties } from "../../utils/api";
+
 const Properties = () => {
   const { isLoading, isError, data } = useProperties();
   const [filter, setFilter] = useState("");
+
   if (isError) {
     return (
       <div className="wrapper">
@@ -30,7 +31,6 @@ const Properties = () => {
     );
   }
 
-  // Ensure data is always an array
   const propertyList = Array.isArray(data) ? data : [];
 
   return (
@@ -42,19 +42,19 @@ const Properties = () => {
           {propertyList
             .filter((property) => {
               const title = property?.title || "";
-              const Location = property?.Location || "";
+              const city = property?.city || "";
+              const subcity = property?.subcity || "";
               const price = property?.price?.toString() || "";
-              const status = property?.status || "";
 
               return (
                 title.toLowerCase().includes(filter.toLowerCase()) ||
-                Location.toLowerCase().includes(filter.toLowerCase()) ||
-                price.includes(filter) ||
-                status.toLowerCase().includes(filter.toLowerCase())
+                city.toLowerCase().includes(filter.toLowerCase()) ||
+                subcity.toLowerCase().includes(filter.toLowerCase()) ||
+                price.includes(filter)
               );
             })
-            .map((card, i) => (
-              <PropertyCard card={card} key={i} />
+            .map((property, i) => (
+              <PropertyCard card={property} key={i} />
             ))}
         </div>
       </div>

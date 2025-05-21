@@ -1,130 +1,83 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+
 export const api = axios.create({
-  baseURL: "https://localhost:8000/api"
+  baseURL: "http://localhost:3000/api"  // Updated base URL
 });
 
-//to get all properties for the home page and to get all elements with status pending so used in admin dashboard and properties and slider page
+// Get all properties (connected to /residencies endpoint)
 export const getAllProperties = async () => {
   try {
-    const response = await api.get("/Property", {
+    const response = await api.get("/residencies", {
       timeout: 10 * 1000
     });
-
-    if (response.status === 400 || response.status === 500) {
-      throw response.data;
-    }
     return response.data;
   } catch (error) {
-    toast.error("something went wrong, try again later!");
+    toast.error("Something went wrong while fetching properties!");
     throw error;
   }
 };
 
-//to get a single property for property detail page
+// Get a single property
 export const getProperty = async (id) => {
   try {
-    const response = await api.get(`/Property/${id}`, {
+    const response = await api.get(`/residencies/${id}`, {
       timeout: 30 * 1000
     });
-    if (response.status === 400 || response.status === 500) {
-      throw response.data;
-    }
     return response.data;
   } catch (error) {
-    toast.error(
-      "something went wrong while fetching Property, try again later!"
-    );
+    toast.error("Something went wrong while fetching property!");
     throw error;
   }
 };
 
-//for login authentication using jwt
-export const createUser = async (username, password, token) => {
-  try {
-    await api.post(
-      `/user/login`,
-      { username, password },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
-  } catch (error) {
-    toast.error("Something went wrong while you login, Please try again");
-    throw error;
+
+
+// In api.js
+export const createResidency = async (residencyData, token) => {
+  const response = await fetch('/api/residencies', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify(residencyData)
+  });
+  
+  if (!response.ok) {
+    throw new Error('Failed to create residency');
   }
+  
+  return response.json();
 };
 
-//to update the status of the property when a user book it
-export const bookStatus = async (status, id, token) => {
+// Update property
+export const updateProperty = async (id, data, token) => {
   try {
-    await api.put(
-      `/Property/${id}/status`,
-      {
-        propertyid: id,
-        status: status
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
-  } catch (error) {
-    toast.error("Something went wrong while updating status, Please try again");
-    throw error;
-  }
-};
-
-//used when admin needs to delete booked properties and users want to cancel the booked property
-export const removeBooking = async (id, token) => {
-  try {
-    await api.delete(`/Property/${id}`, {
+    const response = await api.put(`/residencies/${id}`, data, {
       headers: {
         Authorization: `Bearer ${token}`
       }
-    });
-  } catch (error) {
-    toast.error(
-      "Something went wrong while deleting property, Please try again"
-    );
-
-    throw error;
-  }
-};
-//if the updated db worked
-export const fetchPendingProperties = async (data, token) => {
-  try {
-    const response = await api.get("/Property/pending", {
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-      params: data
     });
     return response.data;
   } catch (error) {
-    toast.error(
-      "Something went wrong while fetching properties based on status, Please try again"
-    );
+    toast.error("Something went wrong while updating property!");
     throw error;
   }
 };
-//used in home page of the admin dashboard
 
-//when admin wants to upload new property
-export const createResidency = async (data, token) => {
-  console.log(data);
+// Delete property
+export const deleteProperty = async (id, token) => {
   try {
-    const res = await api.post(`/Property`, data, {
+    const response = await api.delete(`/residencies/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
+    return response.data;
   } catch (error) {
-    console.error("Error posting to database:", error);
-    toast.error("Something went wrong while posting to database");
+    toast.error("Something went wrong while deleting property!");
     throw error;
   }
 };
+

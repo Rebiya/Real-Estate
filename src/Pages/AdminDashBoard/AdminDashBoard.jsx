@@ -1,36 +1,37 @@
-import React, { useState, useEffect } from "react";
-import { FaSearch, FaUpload, FaTrash } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaSearch, FaUpload, FaTrash, FaBars, FaTimes, FaSignOutAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "./AdminDashBoard.css";
 import { GiReturnArrow } from "react-icons/gi";
 import useAuthCheck from "../../hooks/useAuthCheck";
-import useProperties from "../../hooks/useProperties.jsx";
-import AddPropertyModal from "../../Components/AddPropertyModal/AddPropertyModal.jsx";
+import useProperties from "../../hooks/useProperties";
 import { useAuth0 } from "@auth0/auth0-react";
-import axios from "axios"; // Ensure axios is imported
+import { deleteProperty } from "../../utils/api";
 
 const AdminDashBoard = () => {
   const navigate = useNavigate();
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, logout } = useAuth0();
   const { validateLogin } = useAuthCheck();
-  const { data } = useProperties();
-  const [properties, setProperties] = useState([]);
+  const { data: properties, isLoading, refetch } = useProperties();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Fetch the token and properties when the component mounts
-  useEffect(() => {
-    const fetchTokenAndProperties = async () => {
-      try {
-        const token = await getAccessTokenSilently();
-        if (token) {
-          setProperties(data); // assuming data is an array of property objects
-        }
-      } catch (error) {
-        console.error("Error fetching token or properties", error);
-      }
-    };
-    fetchTokenAndProperties();
-  }, [getAccessTokenSilently, data]);
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+
+  const getImageUrl = (image_url) => {
+    if (!image_url) return '/default-property.jpg';
+    if (image_url.startsWith('http://') || image_url.startsWith('https://')) {
+      return image_url;
+    }
+    return `http://localhost:3000${image_url.startsWith('/') ? '' : '/'}${image_url}`;
+  };
+
+  const filteredProperties = properties?.filter(property =>
+    property.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    property.city?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    property.propertyType?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleAddPropertyClick = () => {
     if (!validateLogin()) {
@@ -40,39 +41,19 @@ const AdminDashBoard = () => {
     navigate("/AddPropertyModal");
   };
 
-  // Delete handler
   const handleDelete = async (id) => {
     try {
       const token = await getAccessTokenSilently();
-      if (!token) {
-        toast.error("You need to be logged in to delete a property.");
-        return;
-      }
-
-      // Make the API call to delete the property
-      await axios.delete(`/Property/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}` // Include the Authorization header with the token
-        }
-      });
-
-      // If successful, remove the property from the state
-      setProperties((prevProperties) =>
-        prevProperties.filter((property) => property.id !== id)
-      );
-
+      await deleteProperty(id, token);
+      refetch();
       toast.success("Property deleted successfully!");
     } catch (error) {
-      // Handle any errors and show a toast notification
-      toast.error(
-        "Something went wrong while deleting property, Please try again."
-      );
-      console.error("Error deleting property", error);
+      toast.error(error.message || "Failed to delete property");
     }
   };
 
-  const handleReturn = () => {
-    navigate("/");
+  const handleLogout = () => {
+    logout({ returnTo: window.location.origin });
   };
 
   const openCalendly = () => {
@@ -81,73 +62,95 @@ const AdminDashBoard = () => {
 
   return (
     <div className="dashboard-container">
+      {/* Mobile Menu Button */}
+      <button className="mobile-menu-button" onClick={toggleSidebar}>
+        {sidebarOpen ? <FaTimes /> : <FaBars />}
+      </button>
+
       {/* Sidebar */}
-      <aside className="dashboard-sidebar">
+      <aside className={`dashboard-sidebar ${sidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <h2>NovaNest</h2>
         </div>
         <ul className="sidebar-menu">
           <li>Dashboard</li>
-          <li>Schedules</li>
-          <li>Tickets</li>
+          <li onClick={openCalendly}>Schedules</li>
           <li>Customers</li>
-          <li>Settings</li>
         </ul>
         <button className="upload-button" onClick={handleAddPropertyClick}>
           <FaUpload /> Upload Properties
-        </button>
-        <button
-          className="upload-button"
-          style={{ marginTop: "5px" }}
-          onClick={openCalendly}
-        >
-          Open Calendly
         </button>
       </aside>
 
       {/* Main Content */}
       <div className="dashboard-main">
-        {/* Top Navbar */}
         <nav className="dashboard-navbar">
+          <div className="navbar-left">
+            <button className="menu-button" onClick={toggleSidebar}>
+              <FaBars />
+            </button>
+          </div>
           <div className="search-bar">
-            <input type="text" placeholder="Search..." />
+            <input 
+              type="text" 
+              placeholder="Search properties..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
             <button>
               <FaSearch />
             </button>
           </div>
+          <div className="navbar-right">
+            <button className="logout-button" onClick={handleLogout}>
+              <FaSignOutAlt /> Logout
+            </button>
+          </div>
         </nav>
 
-        {/* Content Section */}
         <div className="dashboard-content">
           <h2>Welcome to Admin Dashboard</h2>
-          <div className="property-cards">
-            {properties.length > 0 ? (
-              properties.map((property) => (
-                <div className="property-card" key={property.id}>
-                  <img
-                    src={property.imgurl}
-                    alt={property.title}
-                    className="property-image"
-                  />
-                  <div className="property-details">
-                    <h3>{property.title}</h3>
-                    <p>Price: {property.price}</p>
-                    <div className="buttons">
-                      <button
-                        className="delete-button"
-                        onClick={() => handleDelete(property.id)}
-                      >
-                        <FaTrash /> Delete
-                      </button>
-                      <button className="return-button" onClick={handleReturn}>
-                        <GiReturnArrow /> Return
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))
+          <div className="content-scrollable">
+            {isLoading ? (
+              <p>Loading properties...</p>
             ) : (
-              <p>No properties available</p>
+              <div className="property-cards">
+                {filteredProperties?.length > 0 ? (
+                  filteredProperties.map((property) => (
+                    <div className="property-card" key={property.id}>
+                      <img
+                        src={getImageUrl(property.image_url)}
+                        alt={property.title}
+                        className="property-image"
+                        onError={(e) => {
+                          e.target.src = '/default-property.jpg';
+                          e.target.onerror = null;
+                        }}
+                      />
+                      <div className="property-details">
+                        <h3>{property.title || 'Untitled Property'}</h3>
+                        <p>Price: {property.price || 'N/A'}</p>
+                        <div className="buttons">
+                          <button
+                            className="delete-button"
+                            onClick={() => handleDelete(property.id)}
+                          >
+                            <FaTrash /> Delete
+                          </button>
+                          <button 
+                            className="return-button" 
+                            onClick={() => navigate("/")}
+                          >
+                            <GiReturnArrow /> Return
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p>No properties available</p>
+                )}
+              </div>
             )}
           </div>
         </div>
