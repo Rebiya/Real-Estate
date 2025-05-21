@@ -8,6 +8,10 @@ import useAuthCheck from "../../hooks/useAuthCheck";
 import useProperties from "../../hooks/useProperties";
 import { useAuth0 } from "@auth0/auth0-react";
 import { deleteProperty } from "../../utils/api";
+import Modal from 'react-modal';
+
+Modal.setAppElement('#root'); 
+
 
 const AdminDashBoard = () => {
   const navigate = useNavigate();
@@ -16,6 +20,9 @@ const AdminDashBoard = () => {
   const { data: properties, isLoading, refetch } = useProperties();
   const [searchTerm, setSearchTerm] = useState("");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [selectedProperty, setSelectedProperty] = useState(null); // for modal
+
 
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -41,16 +48,37 @@ const AdminDashBoard = () => {
     navigate("/AddPropertyModal");
   };
 
-  const handleDelete = async (id) => {
-    try {
-      const token = await getAccessTokenSilently();
-      await deleteProperty(id, token);
-      refetch();
-      toast.success("Property deleted successfully!");
-    } catch (error) {
-      toast.error(error.message || "Failed to delete property");
-    }
-  };
+const handleDelete = async (id) => {
+  if (isDeleting) return;
+
+  // Set the property to confirm in modal
+  const property = properties.find(p => p.id === id);
+  setSelectedProperty(property);
+};
+
+// Confirm and delete after user confirms in modal
+const confirmDelete = async () => {
+  if (!selectedProperty) return;
+
+  try {
+    setIsDeleting(true);
+    const token = await getAccessTokenSilently();
+    await deleteProperty(selectedProperty.id, token);
+    toast.success("Property deleted successfully!");
+    refetch();
+  } catch (error) {
+    toast.error(error.message || "Failed to delete property");
+    console.error("Delete error:", error);
+  } finally {
+    setIsDeleting(false);
+    setSelectedProperty(null); // close modal
+  }
+};
+
+const cancelDelete = () => {
+  setSelectedProperty(null);
+};
+
 
   const handleLogout = () => {
     logout({ returnTo: window.location.origin });
@@ -134,8 +162,9 @@ const AdminDashBoard = () => {
                           <button
                             className="delete-button"
                             onClick={() => handleDelete(property.id)}
+                            disabled={isDeleting}
                           >
-                            <FaTrash /> Delete
+                            {isDeleting ? 'Deleting...' : <><FaTrash /> Delete</>}
                           </button>
                           <button 
                             className="return-button" 
@@ -155,6 +184,23 @@ const AdminDashBoard = () => {
           </div>
         </div>
       </div>
+      <Modal
+  isOpen={!!selectedProperty}
+  onRequestClose={cancelDelete}
+  contentLabel="Confirm Delete"
+  className="delete-modal"
+  overlayClassName="modal-overlay"
+>
+  <h2>Confirm Deletion</h2>
+  <p>Are you sure you want to delete <strong>{selectedProperty?.title}</strong>?</p>
+  <div className="modal-buttons">
+    <button onClick={confirmDelete} disabled={isDeleting}>
+      {isDeleting ? 'Deleting...' : 'Yes, Delete'}
+    </button>
+    <button onClick={cancelDelete}>Cancel</button>
+  </div>
+</Modal>
+
     </div>
   );
 };
