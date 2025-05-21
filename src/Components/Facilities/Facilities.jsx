@@ -1,95 +1,98 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Box, Button, Group, NumberInput, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import React, { useContext } from "react";
-import useProperties from "../../hooks/useProperties.jsx";
-import { useMutation } from "react-query";          
+import React from "react";
+import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 import { createResidency } from "../../utils/api";
+import useProperties from "../../hooks/useProperties";
+
 const Facilities = ({
   prevStep,
   propertyDetails,
   setPropertyDetails,
-  setOpened,
   setActiveStep
 }) => {
+  const { user, getAccessTokenSilently } = useAuth0();
+  const { refetch: refetchProperties } = useProperties();
+
   const form = useForm({
     initialValues: {
       bedrooms: propertyDetails.bedrooms,
-      bathroom: propertyDetails.bathroom,
-      status: propertyDetails.status
+      bathroom: propertyDetails.bathrooms,
+      parking: propertyDetails.parking
     },
     validate: {
       bedrooms: (value) => (value < 1 ? "Must have at least one room" : null),
-      bathroom: (value) =>
-        value < 1 ? "Must have at least one bathroom" : null
+      bathroom: (value) => (value < 1 ? "Must have at least one bathroom" : null)
     }
   });
 
-  const { bedrooms, bathroom, status } = form.values;
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async () => {
+      const token = await getAccessTokenSilently();
+      return createResidency(
+        {
+          ...propertyDetails,
+          bedrooms: form.values.bedrooms,
+          parking: form.values.parking,
+          bathrooms: form.values.bathroom,
+          user_email: user?.email
+        },
+        token
+      );
+    },
+    onSuccess: () => {
+      toast.success("Property added successfully!");
+      resetForm();
+      refetchProperties();
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.message || "Failed to create property");
+      console.error("Creation error:", error);
+    }
+  });
+
+  const resetForm = () => {
+    setPropertyDetails({
+      title: "",
+      description: "",
+      price: 0,
+      country: "",
+      city: "",
+      subcity: "",
+      image_url: "",
+      bedrooms: 0,
+      bathrooms: 0,
+      parking: 0,
+      user_email: user?.email || ""
+    });
+    if (setActiveStep) {
+      setActiveStep(0);
+    }
+  };
 
   const handleSubmit = () => {
+    if (!propertyDetails.image_url) {
+      toast.error("Please upload a property image");
+      return;
+    }
+    
     const { hasErrors } = form.validate();
     if (!hasErrors) {
-      setPropertyDetails((prev) => ({
+      setPropertyDetails(prev => ({
         ...prev,
-        bedrooms,
-        status,
-        bathroom
+        bedrooms: form.values.bedrooms,
+        parking: form.values.parking,
+        bathrooms: form.values.bathroom
       }));
       mutate();
     }
   };
 
-  // ==================== upload logic
-  const { user, getAccessTokenSilently } = useAuth0();
-  const token = getAccessTokenSilently();
-  const { refetch: refetchProperties } = useProperties();
-
-  const { mutate, isLoading } = useMutation({
-    mutationFn: () =>
-      createResidency(
-        {
-          ...propertyDetails,
-          bedrooms,
-          status,
-          bathroom
-        },
-        token
-      ),
-    onError: ({ response }) =>
-      toast.error(response.data.message, { position: "bottom-right" }),
-    onSettled: () => {
-      toast.success("Added Successfully", { position: "bottom-right" });
-      setPropertyDetails({
-        propertyid: "",
-        title: "",
-        description: "",
-        price: 0,
-        country: "",
-        city: "",
-        subcity: "",
-        imgurl: null,
-        status: "",
-        propertyType: "",
-        bedrooms: 0,
-        bathroom: 0,
-        staffemail: user?.email
-      });
-      setOpened(false);
-      setActiveStep(0);
-      refetchProperties();
-    }
-  });
-
   return (
     <Box maw="30%" mx="auto" my="sm">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSubmit();
-        }}
-      >
+      <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
         <NumberInput
           withAsterisk
           label="No of Bedrooms"
@@ -103,16 +106,13 @@ const Facilities = ({
           {...form.getInputProps("bathroom")}
         />
         <TextInput
-          label="current status of the house"
-          min={0}
-          {...form.getInputProps("status")}
+          label="Parking"
+          {...form.getInputProps("parking")}
         />
         <Group position="center" mt="xl">
-          <Button variant="default" onClick={prevStep}>
-            Back
-          </Button>
-          <Button type="submit" color="green" disabled={isLoading}>
-            {isLoading ? "Submitting" : "Add Property"}
+          <Button variant="default" onClick={prevStep}>Back</Button>
+          <Button type="submit" color="green" loading={isLoading}>
+            {isLoading ? "Creating..." : "Add Property"}
           </Button>
         </Group>
       </form>

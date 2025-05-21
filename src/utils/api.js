@@ -33,23 +33,23 @@ export const getProperty = async (id) => {
 
 
 
-// In api.js
 export const createResidency = async (residencyData, token) => {
-  const response = await fetch('/api/residencies', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`
-    },
-    body: JSON.stringify(residencyData)
-  });
-  
-  if (!response.ok) {
-    throw new Error('Failed to create residency');
+  try {
+    const response = await api.post("/residencies", residencyData, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    // Optional: log detailed error for debugging
+    console.error("Axios createResidency error:", error?.response?.data || error.message);
+    throw new Error(
+      error?.response?.data?.message || "Failed to create residency"
+    );
   }
-  
-  return response.json();
 };
+
 
 // Update property
 export const updateProperty = async (id, data, token) => {

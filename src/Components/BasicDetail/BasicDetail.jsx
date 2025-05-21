@@ -21,18 +21,16 @@ const BasicDetail = ({
       title: propertyDetails.title,
       description: propertyDetails.description,
       price: propertyDetails.price,
-      propertyType: propertyDetails.propertyType
     },
     validate: {
       title: (value) => validateString(value),
       description: (value) => validateString(value),
       price: (value) =>
         value < 20 ? "Must be greater than 20 Millions" : null,
-      propertyType: (value) => validateString(value)
     }
   });
 
-  const { title, description, price, propertyType } = form.values;
+  const { title, description, price} = form.values;
 
   const handleSubmit = () => {
     const { hasErrors } = form.validate();
@@ -42,7 +40,6 @@ const BasicDetail = ({
         title,
         description,
         price,
-        propertyType
       }));
       nextStep();
     }
@@ -62,11 +59,7 @@ const BasicDetail = ({
           placeholder="Property Name"
           {...form.getInputProps("title")}
         />
-        <TextInput
-          label="Property Type"
-          placeholder="e.g:lexury house"
-          {...form.getInputProps("propertyType")}
-        />
+       
         <Textarea
           placeholder="Description"
           label="Description"
