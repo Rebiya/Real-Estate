@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Property from "./Pages/Property/Property";
 import AboutUs from "./Pages/AboutUs/AboutUs";
+import Users from "./Components/Users/Users";
 import { ReactQueryDevtools } from "react-query/devtools";
 import AddPropertyModal from "./Components/AddPropertyModal/AddPropertyModal";
 import AdminDashBoard from "./Pages/AdminDashBoard/AdminDashBoard";
@@ -35,7 +36,7 @@ function App() {
                   <Route index element={<Websites />} />
                   <Route path="/properties" element={<Properties />} />
                   <Route
-                    path="/properties/:propertyid"
+                    path="/properties/:id"
                     element={<Property />}
                   />
                   <Route path="/bookings" element={<Bookings />} />
@@ -44,7 +45,7 @@ function App() {
                     path="/AddPropertyModal"
                     element={<AddPropertyModal />}
                   />
-                 
+                  <Route path="/users" element={<Users />} />
                 </Route>
                  <Route path="/AdminDashBoard" element={<AdminDashBoard />} />
               </Routes>

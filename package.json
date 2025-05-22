@@ -16,6 +16,8 @@
     "@mantine/dates": "^7.15.3",
     "@mantine/form": "^7.15.3",
     "@mantine/hooks": "^7.15.3",
+    "@mantine/notifications": "^8.0.1",
+    "@tabler/icons-react": "^3.33.0",
     "axios": "^1.7.9",
     "dayjs": "^1.11.13",
     "dotenv": "^16.4.7",

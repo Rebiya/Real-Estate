@@ -11,7 +11,7 @@
 
 .property-container > img {
   align-self: center;
-  max-height: 30rem;
+  height: 30rem;
   width: 100%;
   border-radius: 1rem;
   object-fit: cover;

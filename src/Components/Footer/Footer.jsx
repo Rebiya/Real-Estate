@@ -19,7 +19,7 @@ const Footer = () => {
           <span className="secondaryText"> Addis Ababa, Ethiopia</span>
           <div className="flexCenter f-menu">
             <Link to="/AdminDashBoard">
-              <button className="styled-button">Staff Login</button>
+              <button className="styled-button">Staff </button>
             </Link>
           </div>
         </div>

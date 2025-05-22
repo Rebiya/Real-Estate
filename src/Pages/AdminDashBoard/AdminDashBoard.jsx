@@ -97,13 +97,13 @@ const cancelDelete = () => {
 
       {/* Sidebar */}
       <aside className={`dashboard-sidebar ${sidebarOpen ? 'open' : ''}`}>
-        <div className="sidebar-header">
+        <div className="sidebar-header">users
           <h2>NovaNest</h2>
         </div>
         <ul className="sidebar-menu">
           <li>Dashboard</li>
           <li onClick={openCalendly}>Schedules</li>
-          <li>Customers</li>
+          <li onClick={() => navigate("/users")}>Customers</li>
         </ul>
         <button className="upload-button" onClick={handleAddPropertyClick}>
           <FaUpload /> Upload Properties
