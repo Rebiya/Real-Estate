@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 
 // Axios instance
 const api = axios.create({
-  baseURL: "http://localhost:3000/api",
+  baseURL: "https://realestate-backend-8b6m.onrender.com/api",
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",

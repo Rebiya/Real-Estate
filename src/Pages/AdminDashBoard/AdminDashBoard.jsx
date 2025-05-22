@@ -31,7 +31,7 @@ const AdminDashBoard = () => {
     if (image_url.startsWith('http://') || image_url.startsWith('https://')) {
       return image_url;
     }
-    return `http://localhost:3000${image_url.startsWith('/') ? '' : '/'}${image_url}`;
+    return `https://realestate-backend-8b6m.onrender.com${image_url.startsWith('/') ? '' : '/'}${image_url}`;
   };
 
   const filteredProperties = properties?.filter(property =>

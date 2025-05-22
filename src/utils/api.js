@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 export const api = axios.create({
-  baseURL: "http://localhost:3000/api"  // Updated base URL
+  baseURL: "https://realestate-backend-8b6m.onrender.com/api"  // Updated base URL
 });
 
 // Get all properties (connected to /residencies endpoint)

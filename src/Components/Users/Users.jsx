@@ -11,7 +11,7 @@ import './Users.css';
 
 // Configure axios instance with base URL
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: 'https://realestate-backend-8b6m.onrender.com/api',
   headers: {
     'Content-Type': 'application/json'
   }

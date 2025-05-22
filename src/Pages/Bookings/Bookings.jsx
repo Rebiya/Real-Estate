@@ -13,7 +13,7 @@ const Bookings = () => {
 
   const fetchData = async () => {
     const token = await getAccessTokenSilently();
-    const response = await fetch("https://localhost:8000/api/Property", {
+    const response = await fetch("https://realestate-backend-8b6m.onrender.com/api/Property", {
       headers: {
         Authorization: `Bearer ${token}`
       }
